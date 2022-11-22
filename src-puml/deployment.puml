@@ -1,0 +1,40 @@
+@startuml
+title Diagrame de déploiement «OCpizza»
+
+/' = = = = = = = STYLE = = = = = = = '/
+' skinparam monochrome true
+' skinparam linetype ortho
+
+cloud "PayPal server" as bank <<system>>
+actor "employee"
+actor "client"
+
+/' = = = = = = = ARTIFACT = = = = = = = '/
+
+Frame  "OCpizza" <<Deployment>> {
+
+    node "Apache HTTP server" as ws {
+        node "virtualHost Front" as vhf
+        node "virtualHost Back" as vhb
+        artifact "Django app" as dapp
+    }
+
+    database "MariaDB server" as dbs {
+        file "create-db.sql" as scriptdb
+        rectangle "Database" as db
+    }
+}
+
+/' = = = = = = = RELATION = = = = = = = '/
+
+bank -up- dapp
+client -- vhf
+employee -- vhb
+
+ws -- dbs
+vhf -- dapp
+dapp -up- vhb
+
+scriptdb . db
+
+@enduml

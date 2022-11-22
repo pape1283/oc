@@ -1,0 +1,35 @@
+@startuml
+
+title Modèle physique de donnée\n
+
+/' = = = = = = = STYLE = = = = = = = '/
+hide empty methods
+hide circle
+skinparam class {
+    BackgroundColor<<assoc>> lightblue
+}
+
+/' = = = = = = = MACRO = = = = = = = '/
+!define rel(a,b,c,d,e) a c e
+!define rea(a,b,c,d) (a, b) c d
+!define pyk(n,t="MEDIUMINT NOT NULL UNSIGNED") <font color="red">PK:<b>n</b> <size:09>[t]</size></font>
+!define fnk(n,r,t="MEDIUMINT NOT NULL UNSIGNED") <font color="blue">FK:<b>n</b> <size:09>[t]</size></font>
+!define pfk(n,r,t="MEDIUMINT NOT NULL UNSIGNED") <font color="orangered">PFK:<b>n</b> <size:09>[t]</size></font>
+!define att(n,u,s) {field} <b>n</b> [s]
+
+/' = = = = = = = CLASSE = = = = = = = '/
+!includeurl https://raw.githubusercontent.com/freezed/ocp6/master/src-puml/classes.iuml
+
+/' = = = = = = = KEY = = = = = = = '/
+!includeurl https://raw.githubusercontent.com/freezed/ocp6/master/src-puml/keys.iuml
+
+/' = = = = = = = ATTRIBUTE = = = = = = = '/
+!includeurl https://raw.githubusercontent.com/freezed/ocp6/master/src-puml/attributes.iuml
+
+/' = = = = = = = ASSOCIATION = = = = = = = '/
+rel(pizza,.,-,.,composition)
+rel(composition,.,-,.,ingredient)
+rel(ingredient,.,--,.,stock)
+rel(stock,.,--,.,restaurant)
+
+@enduml
